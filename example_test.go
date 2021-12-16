@@ -74,3 +74,19 @@ func ExampleSort() {
 	//Output:
 	// ['🐔' '🥚']
 }
+
+func ExampleInsert() {
+	s := []rune{'p', 'h', 'e', 'r'}
+	s = slice.Insert(s, 0, 'G', 'o')
+	fmt.Println(string(s))
+	//Output:
+	// Gopher
+}
+
+func ExampleDelete() {
+	s := []rune{'H', 'e', 'l', 'l', 'o', 'o', 'o'}
+	s = slice.Delete(s, 5, 7)
+	fmt.Println(string(s))
+	//Output:
+	// Hello
+}
