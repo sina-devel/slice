@@ -93,7 +93,7 @@ func Insert[T any](s []T, i int, v ...T) []T {
 // Delete removes the elements s[i:j] from s, returning the modified slice.
 // Delete panics if s[i:j] is not a valid slice of s.
 // Delete modifies the contents of the slice s; it does not create a new slice.
-// Delete is O(len(s)-(j-i)), so if many items must be deleted, it is better to
+// Delete is O(len(s)), so if many items must be deleted, it is better to
 // make a single call deleting them all together than to delete one at a time.
 func Delete[T any](s []T, i, j int) []T {
 	if i < 0 || j < i || j > len(s) {
