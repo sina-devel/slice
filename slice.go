@@ -1,5 +1,7 @@
 package slice
 
+import "fmt"
+
 // Equal reports whether two slices are equal: the same length and all
 // elements equal. If the lengths are different, Equal returns false.
 // Otherwise, the elements are compared in index order, and the
@@ -64,4 +66,26 @@ func Clone[T any](s []T) []T {
 		cloned[i] = s[i]
 	}
 	return cloned
+}
+
+// Insert inserts the values v... into s at index i, returning the modified slice.
+// In the returned slice r, r[i] == the first v.  Insert panics if i is out of range.
+// This function is O(len(s) + len(v)).
+func Insert[T any](s []T, i int, v ...T) []T {
+	if i < 0 || i > len(s) {
+		panic(fmt.Errorf("runtime error: index out of range [%d] with length %d", i, len(s)))
+	}
+
+	if n := len(s) + len(v); n <= cap(s) {
+		s2 := s[:n]
+		copy(s2[i+len(v):], s[i:])
+		copy(s2[i:], v)
+		return s2
+	}
+
+	s2 := make([]T, len(s)+len(v))
+	copy(s2, s[:i])
+	copy(s2[i:], v)
+	copy(s2[i+len(v):], s[i:])
+	return s2
 }

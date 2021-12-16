@@ -225,3 +225,56 @@ func TestSort(t *testing.T) {
 		})
 	}
 }
+
+func TestInsert(t *testing.T) {
+	testCases := []struct {
+		name string
+		s    []int
+		i    int
+		v    []int
+		want []int
+	}{
+		{
+			name: "nil slice",
+			s:    nil,
+			i:    0,
+			v:    []int{1, 2},
+			want: []int{1, 2},
+		},
+		{
+			name: "zero length",
+			s:    []int{},
+			i:    0,
+			v:    []int{1, 2},
+			want: []int{1, 2},
+		},
+		{
+			name: "insert to front of slice",
+			s:    []int{3, 4},
+			i:    0,
+			v:    []int{1, 2},
+			want: []int{1, 2, 3, 4},
+		},
+		{
+			name: "insert to back of slice",
+			s:    []int{1, 2, 3},
+			i:    3,
+			v:    []int{4, 5},
+			want: []int{1, 2, 3, 4, 5},
+		},
+		{
+			name: "insert to between of slice",
+			s:    []int{1, 2, 3, 4, 7},
+			i:    4,
+			v:    []int{5, 6},
+			want: []int{1, 2, 3, 4, 5, 6, 7},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := Insert(tc.s, tc.i, tc.v...); !Equal(got, tc.want) {
+				t.Errorf("got %v, want %v", got, tc.want)
+			}
+		})
+	}
+}
