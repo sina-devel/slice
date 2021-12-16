@@ -89,3 +89,22 @@ func Insert[T any](s []T, i int, v ...T) []T {
 	copy(s2[i+len(v):], s[i:])
 	return s2
 }
+
+// Delete removes the elements s[i:j] from s, returning the modified slice.
+// Delete panics if s[i:j] is not a valid slice of s.
+// Delete modifies the contents of the slice s; it does not create a new slice.
+// Delete is O(len(s)-(j-i)), so if many items must be deleted, it is better to
+// make a single call deleting them all together than to delete one at a time.
+func Delete[T any](s []T, i, j int) []T {
+	if i < 0 || j < i || j > len(s) {
+		panic(fmt.Errorf("runtime error: slice bounds out of range [%d:%d] with length %d", i, j, len(s)))
+	}
+
+	copy(s[i:], s[j:])
+	var zero T
+	for k, n := len(s)-j+i, len(s); k < n; k++ {
+		s[k] = zero
+	}
+
+	return s[:len(s)-j+i]
+}

@@ -278,3 +278,35 @@ func TestInsert(t *testing.T) {
 		})
 	}
 }
+
+func TestDelete(t *testing.T) {
+	testCases := []struct {
+		name string
+		s    []int
+		i    int
+		j    int
+		want []int
+	}{
+		{
+			name: "delete a element of slice",
+			s:    []int{3, 4},
+			i:    0,
+			j:    1,
+			want: []int{4},
+		},
+		{
+			name: "delete a slice of slice",
+			s:    []int{1, 2, 3, 4, 5},
+			i:    3,
+			j:    5,
+			want: []int{1, 2, 3},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := Delete(tc.s, tc.i, tc.j); !Equal(got, tc.want) {
+				t.Errorf("got %v, want %v", got, tc.want)
+			}
+		})
+	}
+}
